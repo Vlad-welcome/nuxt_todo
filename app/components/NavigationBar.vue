@@ -1,62 +1,58 @@
 <template>
-  <nav
-    class="d-flex justify-content-between align-items-center p-3 bg-black mb-3"
-    :key="refreshKey"
-  >
-    <NuxtLink to="/" class="btn btn-outline-primary">Website</NuxtLink>
+  <!--<nav class="d-flex justify-content-between align-items-center p-3 mb-3" :key="refreshKey">
+    <NuxtLink to="/" class="btn btn-outline-primary">ToDo List</NuxtLink>
     <ul class="d-flex list-unstyled mb-0">
-      <li class="list-inline-item">
-        <NuxtLink to="/about" class="btn btn-outline-primary"> About </NuxtLink>
-      </li>
-      <div v-if="!user" class="d-flex">
+       <template v-if="!user" class="d-flex">
         <li class="list-inline-item">
-          <NuxtLink to="/auth/register" class="btn btn-outline-primary"> Register </NuxtLink>
+          <NuxtLink to="/auth/register" class="btn btn-primary"> Регистрация </NuxtLink>
         </li>
         <li class="list-inline-item">
-          <NuxtLink to="/auth/login" class="btn btn-outline-primary"> Login </NuxtLink>
+          <NuxtLink to="/auth/login" class="btn btn-primary"> Авторизация </NuxtLink>
         </li>
-      </div>
-      <div v-else class="d-flex">
-        <li class="list-inline-item btn btn-outline-primary" @click="logout">Logout</li>
+      </template>
+      <template v-else class="d-flex">
+        <li class="list-inline-item btn btn-primary" @click="logout">Выйти</li>
         <li class="list-inline-item">
-          <NuxtLink to="/me" class="btn btn-outline-primary"> {{ user?.name }} </NuxtLink>
+          <NuxtLink to="/" class="btn btn-primary"> {{ user?.name }} </NuxtLink>
         </li>
-      </div>
+      </template> 
     </ul>
-  </nav>
+  </nav>-->
 </template>
 
 <script lang="ts" setup>
-const refreshKey = useState<number>("navRefreshKey", () => 0);
+// const refreshKey = useState<number>("navRefreshKey", () => 0);
 
-const { data: user } = await useAsyncData("navbar-user", verifyAuth, {
-  watch: [refreshKey],
-});
+// const { data: user } = await useAsyncData("navbar-user", verifyAuth, {
+//   watch: [refreshKey],
+// });
 
-async function verifyAuth() {
-  const token = useCookie("token");
+// async function verifyAuth() {
+//   const token = useCookie("token");
 
-  if (!token) {
-    return;
-  }
+//   if (!token.value) {
+//     return null;
+//   }
 
-  const result = await $fetch("/api/auth/verifyToken", {
-    method: "POST",
-    body: { token: token.value },
-    async onResponseError({ response }) {
-      return;
-    },
-  });
+//   try {
+//     const result = await $fetch("/api/auth/verifyToken", {
+//       method: "POST",
+//       body: { token: token.value },
+//     });
 
-  if (!result.success) {
-    return;
-  }
+//     if (!result.success) {
+//       return null;
+//     }
 
-  return result.user;
-}
+//     return result.user;
+//   } catch {
+//     return null;
+//   }
+// }
 
-async function logout() {
-  useCookie("token").value = undefined;
-  refreshKey.value++;
-}
+// async function logout() {
+//   const token = useCookie("token");
+//   token.value = null;
+//   refreshKey.value++;
+// }
 </script>

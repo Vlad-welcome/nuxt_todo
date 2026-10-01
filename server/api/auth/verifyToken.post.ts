@@ -5,7 +5,7 @@ export default defineEventHandler(async (e) => {
   const { token } = await readBody(e);
 
   if (!token) {
-    throw createError({ statusCode: 400, message: "No token" });
+    throw createError({ statusCode: 400, message: "Нет token" });
   }
 
   const user = jwt.verify(token, process.env.JWT_PRIVATE!) as JwtUserInfo;
